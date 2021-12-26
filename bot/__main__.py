@@ -62,13 +62,12 @@ def stats(update, context):
 
 def start(update, context):
     buttons = button_build.ButtonMaker()
-    buttons.buildbutton("Repo", "https://github.com/arshsisodiya/helios-mirror-public")
-    buttons.buildbutton("Channel", "https://t.me/heliosmirror")
+    buttons.buildbutton("𝗠𝗦𝗣 𝗕𝗼𝘁𝘀", "https://telegram.dog/MSPbots")
+    buttons.buildbutton("𝗦𝘂𝗽𝗽𝗼𝗿𝘁", "https://telegram.dog/MSPdiscussion")
     reply_markup = InlineKeyboardMarkup(buttons.build_menu(2))
     if CustomFilters.authorized_user(update) or CustomFilters.authorized_chat(update):
         start_string = f'''
-This bot can mirror all your links to Google Drive!
-Type /{BotCommands.HelpCommand} to get a list of available commands
+𝗧𝗵𝗶𝘀 𝗯𝗼𝘁 𝗰𝗮𝗻 𝗺𝗶𝗿𝗿𝗼𝗿 𝗮𝗹𝗹 𝘆𝗼𝘂𝗿 𝗹𝗶𝗻𝗸𝘀 𝘁𝗼 𝗚𝗼𝗼𝗴𝗹𝗲 𝗗𝗿𝗶𝘃𝗲! 𝗢𝗻 𝗠𝗦𝗣 𝗟𝗲𝗲𝗰𝗵 𝘅 𝗠𝗶𝗿𝗿𝗼𝗿 𝗚𝗿𝗼𝘂𝗽
 '''
         sendMarkup(start_string, context.bot, update, reply_markup)
     else:
@@ -165,7 +164,7 @@ help_string_telegraph = f'''<br>
 '''
 
 help = telegraph.create_page(
-        title='Helios-Mirror Help',
+        title='MSP Mirrors Help',
         content=help_string_telegraph,
     )["path"]
 
