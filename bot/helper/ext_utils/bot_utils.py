@@ -126,8 +126,9 @@ def get_readable_message():
                 globals()['PAGE_NO'] -= 1
             START = COUNT
         for index, download in enumerate(list(download_dict.values())[START:], start=1):
+             reply_to = download.message.reply_to_message
              msg += f"<b>▬▬▬▬▬  @MSPbots ▬▬▬▬▬\n\n𝗙𝗶𝗹𝗲𝗻𝗮𝗺𝗲:</b> <code>{download.name()}</code>"
-            msg += f"\n<b>𝗦𝘁𝗮𝘁𝘂𝘀:</b> <i>{download.status()}</i>"
+             msg += f"\n<b>𝗦𝘁𝗮𝘁𝘂𝘀:</b> <i>{download.status()}</i>"
             if download.status() not in [
                 MirrorStatus.STATUS_ARCHIVING,
                 MirrorStatus.STATUS_EXTRACTING,
@@ -142,6 +143,10 @@ def get_readable_message():
                 else:
                     msg += f"\n<b>𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱:</b> {get_readable_file_size(download.processed_bytes())} of {download.size()}"
                 msg += f"\n<b>𝗦𝗽𝗲𝗲𝗱:</b> {download.speed()} | <b>𝗘𝗧𝗔:</b> {download.eta()}"
+                if reply_to:
+                    msg += f"\n<b>𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗕𝘆 : <a href='tg://user?id={download.message.from_user.id}'>{download.message.from_user.first_name}</a></b>"
+                else:
+                    msg += f"\n<b>𝗥𝗲𝗾𝘂𝗲𝘀𝘁𝗲𝗱 𝗕𝘆 : <a href='tg://user?id={download.message.from_user.id}'>{download.message.from_user.first_name}</a></b>"
                 try:
                     msg += f"\n<b>𝗦𝗲𝗲𝗱𝗲𝗿𝘀:</b> {download.aria_download().num_seeders}" \
                            f" | <b>𝗣𝗲𝗲𝗿𝘀:</b> {download.aria_download().connections}"
@@ -152,16 +157,16 @@ def get_readable_message():
                            f" | <b>𝗣𝗲𝗲𝗿𝘀:</b> {download.aria_download().connections}"
                 except:
                     pass
-                msg += f"\n<code>/{BotCommands.CancelMirror} {download.gid()}</code>"
+                msg += f"\n<b>𝗧𝗼 𝗖𝗮𝗻𝗰𝗲𝗹 :</b><code>/{BotCommands.CancelMirror} {download.gid()}</code>\n\n══════════════════════"
             elif download.status() == MirrorStatus.STATUS_SEEDING:
                 msg += f"\n<b>𝗦𝗶𝘇𝗲: </b>{download.size()}"
                 msg += f"\n<b>𝗦𝗽𝗲𝗲𝗱: </b>{get_readable_file_size(download.torrent_info().upspeed)}/s"
                 msg += f" | <b>𝗨𝗽𝗹𝗼𝗮𝗱𝗲𝗱: </b>{get_readable_file_size(download.torrent_info().uploaded)}"
                 msg += f"\n<b>𝗥𝗮𝘁𝗶𝗼: </b>{round(download.torrent_info().ratio, 3)}"
                 msg += f" | <b>𝗧𝗶𝗺𝗲: </b>{get_readable_time(download.torrent_info().seeding_time)}"
-                msg += f"\n<code>/{BotCommands.CancelMirror} {download.gid()}</code>"
+                msg += f"\n<b>𝗧𝗼 𝗖𝗮𝗻𝗰𝗲𝗹 :</b><code>/{BotCommands.CancelMirror} {download.gid()}</code>\n\n══════════════════════"
             else:
-                msg += f"\n<b>Size: </b>{download.size()}"
+                msg += f"\n<b>𝗦𝗶𝘇𝗲: </b>{download.size()}"
             msg += "\n\n"
             if STATUS_LIMIT is not None and index == STATUS_LIMIT:
                 break
